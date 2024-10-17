@@ -1,0 +1,7 @@
+{
+  "login": "Login",
+  "somethingWentWrong": "Something went wrong!",
+  "connectionTimeout": "Connection Timeout!",
+  "noInternetConnection": "No Internet Connected!",
+  "pageNotFound": "Page not found"
+}
