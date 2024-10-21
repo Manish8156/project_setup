@@ -2,11 +2,15 @@ import 'dart:developer' as dev;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:project_setup/core/constants/app_enums.dart';
+import 'package:project_setup/core/extensions/string_extension.dart';
 import 'package:project_setup/layers/flavor_config.dart';
 import 'package:retry/retry.dart';
 import '../../injector/injector.dart';
 import '../constants/app_constants.dart';
 import '../globals.dart';
+import '../utils/fcm_helper.dart';
+import '../utils/hive_helper.dart';
 import 'api_status_code.dart';
 
 class DioClient {
@@ -40,6 +44,13 @@ class AuthInterceptor extends Interceptor {
 
     /// if backend side required the device id , the set to this deviceId in header.
     String? deviceId = await getDeviceId();
+
+    /// similarly if backend side required the device fcmToken, In injectable class already defined and initialize the key,
+    /*String deviceToken = sl<HiveDataRepository>().getData(key: HiveEntityKeys.fcmToken.value);
+    if(deviceToken.isNullOrEmpty){
+      await sl<FCMHelper>().getFcmToken();
+      deviceToken = sl<HiveDataRepository>().getData(key: HiveEntityKeys.fcmToken.value);
+    }*/
 
     /// currently in header only two values are defined.
     final header = {

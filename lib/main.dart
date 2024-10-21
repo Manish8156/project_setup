@@ -1,6 +1,10 @@
+import 'package:project_setup/core/utils/fcm_helper.dart';
 import 'package:project_setup/serverpod_client/client.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'injector/injector.dart';
 
 // Sets up a singleton client object that can be used to talk to the server from
 // anywhere in our app. The client is generated from your server code.
@@ -9,7 +13,13 @@ import 'package:serverpod_flutter/serverpod_flutter.dart';
 // production servers.
 var client = Client('http://$localhost:8090/')..connectivityMonitor = FlutterConnectivityMonitor();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  /// not integrate with firebase
+  // await Firebase.initializeApp();
+  await Injector.setUp();
+  // await sl<FCMHelper>().setUpNotification();
   runApp(const MyApp());
 }
 
@@ -23,7 +33,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Serverpod Example'),
+      home: const MyHomePage(title: 'Project setUp'),
     );
   }
 }
@@ -38,98 +48,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  // These fields hold the last result or error message that we've received from
-  // the server or null if no result exists yet.
-  String? _resultMessage;
-  String? _errorMessage;
-
-  final _textEditingController = TextEditingController();
-
-  // Calls the `hello` method of the `example` endpoint. Will set either the
-  // `_resultMessage` or `_errorMessage` field, depending on if the call
-  // is successful.
-  void _callHello() async {
-    try {
-      final result = await client.example.hello(_textEditingController.text);
-      setState(() {
-        _errorMessage = null;
-        _resultMessage = result;
-      });
-    } catch (e) {
-      setState(() {
-        _errorMessage = '$e';
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: TextField(
-                controller: _textEditingController,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your name',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: ElevatedButton(
-                onPressed: _callHello,
-                child: const Text('Send to Server'),
-              ),
-            ),
-            _ResultDisplay(
-              resultMessage: _resultMessage,
-              errorMessage: _errorMessage,
-            ),
-          ],
+      body: const Center(
+        child: Text(
+          "Welcome",
+          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.red),
         ),
-      ),
-    );
-  }
-}
-
-// _ResultDisplays shows the result of the call. Either the returned result from
-// the `example.hello` endpoint method or an error message.
-class _ResultDisplay extends StatelessWidget {
-  final String? resultMessage;
-  final String? errorMessage;
-
-  const _ResultDisplay({
-    this.resultMessage,
-    this.errorMessage,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    String text;
-    Color backgroundColor;
-    if (errorMessage != null) {
-      backgroundColor = Colors.red[300]!;
-      text = errorMessage!;
-    } else if (resultMessage != null) {
-      backgroundColor = Colors.green[300]!;
-      text = resultMessage!;
-    } else {
-      backgroundColor = Colors.grey[300]!;
-      text = 'No server response yet.';
-    }
-
-    return Container(
-      height: 50,
-      color: backgroundColor,
-      child: Center(
-        child: Text(text),
       ),
     );
   }
