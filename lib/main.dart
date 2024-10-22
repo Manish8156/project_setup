@@ -1,5 +1,4 @@
 import 'package:project_setup/core/utils/fcm_helper.dart';
-import 'package:project_setup/serverpod_client/client.dart';
 import 'package:flutter/material.dart';
 import 'package:serverpod_flutter/serverpod_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,7 +10,6 @@ import 'injector/injector.dart';
 // The client is set up to connect to a Serverpod running on a local server on
 // the default port. You will need to modify this to connect to staging or
 // production servers.
-var client = Client('http://$localhost:8090/')..connectivityMonitor = FlutterConnectivityMonitor();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
