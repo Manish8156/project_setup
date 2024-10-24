@@ -4,8 +4,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:project_setup/layers/data/models/notification_model/notification_payload.dart';
-
-import '../constants/app_constants.dart';
 import 'app_common_imports.dart';
 
 @pragma('vm:entry-point')

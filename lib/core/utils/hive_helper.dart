@@ -185,15 +185,17 @@ class EncryptedHiveDataRepository<T> implements HiveDataRepository<T> {
 class HiveAppRepository {
   /// lets take example of login response adapter data to store in locally
   /// for adaptor its non primitive data type , which is supported by the hive to store the data, for adaptor we have to generate with hiveGenerator.
-
+  final EncryptedHiveDataRepository<String> _loggedInUserToken;
   final EncryptedHiveDataRepository<LoginResponseData> _loginResponseDataHiveRepo;
   final EncryptedHiveDataRepository<String> _fcmTokenValue;
 
   HiveAppRepository({
+    required EncryptedHiveDataRepository<String> loggedInUserToken,
     required EncryptedHiveDataRepository<LoginResponseData> loginResponseDataHiveRepo,
     required EncryptedHiveDataRepository<String> fcmTokenValue,
   })  : _loginResponseDataHiveRepo = loginResponseDataHiveRepo,
-        _fcmTokenValue = fcmTokenValue;
+        _fcmTokenValue = fcmTokenValue,
+        _loggedInUserToken = loggedInUserToken;
 
   Future<void> registerAdapters() async {
     Hive.registerAdapter(LoginResponseDataAdapter());
@@ -202,36 +204,45 @@ class HiveAppRepository {
   Future<void> openBox() async {
     await _loginResponseDataHiveRepo.openBox();
     await _fcmTokenValue.openBox();
+    await _loggedInUserToken.openBox();
   }
 
   Future<void> closeBox() async {
     await _loginResponseDataHiveRepo.closeBox();
     await _fcmTokenValue.closeBox();
+    await _loggedInUserToken.closeBox();
   }
 
   Future<void> clearBox() async {
     await _loginResponseDataHiveRepo.clearBox();
     await _fcmTokenValue.clearBox();
+    await _loggedInUserToken.clearBox();
   }
 
-  Future<void> putStringData({
+  Future<void> putLoggedInUserToken({required String key, required String value}) async {
+    return await _loggedInUserToken.putData(key: key, value: value);
+  }
+
+  Future<String?> getLoggedInUserToken() async {
+    return _loggedInUserToken.getData(key: HiveEntityKeys.loggedInUserToken.value);
+  }
+
+  Future<void> putFcmToken({
     required String key,
     required String value,
-    bool isUnErasedString = false,
   }) async {
     dev.log('HiveAppRepository putStringData :: $key : $value');
     return await _fcmTokenValue.putData(key: key, value: value);
   }
 
-  String? getStringData({
+  String? getFcmToken({
     required String key,
-    bool isUnErasedString = false,
   }) {
     dev.log('HiveAppRepository getStringData :: $key');
     return _fcmTokenValue.getData(key: key);
   }
 
-  Future<void> deleteStringData({
+  Future<void> deleteGetFcmToken({
     required String key,
   }) async {
     dev.log('HiveAppRepository deleteStringData :: $key');

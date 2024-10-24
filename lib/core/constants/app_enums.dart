@@ -1,4 +1,7 @@
 enum HiveEntityKeys {
+  /// logged in user token
+  loggedInUserToken("loggedInUserToken"),
+
   ///logged in user data
   loggedInUser("loggedInUserData"),
 

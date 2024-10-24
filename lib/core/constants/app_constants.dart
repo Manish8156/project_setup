@@ -7,6 +7,9 @@ abstract class AppConstants {
 
   static BuildContext get navigatorContext => navigatorKey.currentState!.context;
 
+  /// Utils
+  static const Locale enLocale = Locale(en);
+
   /// Constant key identifiers
   static const String applicationJson = "application/json";
   static const String contentType = "content-type";
@@ -14,4 +17,5 @@ abstract class AppConstants {
   static const String authorization = "Authorization";
   static const String bearer = "Bearer";
   static const String message = "message";
+  static const String en = "en";
 }

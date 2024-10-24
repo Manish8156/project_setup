@@ -1,7 +1,8 @@
-import 'package:project_setup/core/utils/fcm_helper.dart';
+import 'dart:async';
+import 'dart:developer' as dev;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:serverpod_flutter/serverpod_flutter.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:project_setup/app/project_app.dart';
 
 import 'injector/injector.dart';
 
@@ -12,52 +13,22 @@ import 'injector/injector.dart';
 // production servers.
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(
+    () async {
+      WidgetsFlutterBinding.ensureInitialized();
 
-  /// not integrate with firebase
-  // await Firebase.initializeApp();
-  await Injector.setUp();
-  // await sl<FCMHelper>().setUpNotification();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Serverpod Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Project setUp'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: const Center(
-        child: Text(
-          "Welcome",
-          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.red),
-        ),
-      ),
-    );
-  }
+      /// not integrate with firebase
+      // await Firebase.initializeApp();
+      await Injector.setUp();
+      // await sl<FCMHelper>().setUpNotification();
+      runApp(const ProjectApp());
+    },
+    (error, stackTrace) async {
+      if (!kReleaseMode) {
+        dev.log(':::::::::::::::::::::::::::::::::::::::::::::::');
+        dev.log(':: runZonedGuarded error :: ${error.toString()}');
+        dev.log(':::::::::::::::::::::::::::::::::::::::::::::::');
+      }
+    },
+  );
 }

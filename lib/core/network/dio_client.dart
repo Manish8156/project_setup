@@ -2,15 +2,11 @@ import 'dart:developer' as dev;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:project_setup/core/constants/app_enums.dart';
-import 'package:project_setup/core/extensions/string_extension.dart';
 import 'package:project_setup/layers/flavor_config.dart';
 import 'package:retry/retry.dart';
 import '../../injector/injector.dart';
 import '../constants/app_constants.dart';
 import '../globals.dart';
-import '../utils/fcm_helper.dart';
-import '../utils/hive_helper.dart';
 import 'api_status_code.dart';
 
 class DioClient {

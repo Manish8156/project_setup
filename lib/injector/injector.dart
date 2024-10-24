@@ -1,7 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:project_setup/core/network/dio_client.dart';
 import 'package:project_setup/core/network/network_info.dart';
 import 'package:project_setup/core/network/retrofit_api_client.dart';
@@ -34,6 +33,9 @@ abstract class Injector {
   static Future<void> registerLocalCache() async {
     sl.registerSingleton(
       HiveAppRepository(
+        loggedInUserToken: EncryptedHiveDataRepository<String>(
+          boxKey: HiveEntityKeys.loggedInUserToken.value,
+        ),
         loginResponseDataHiveRepo: EncryptedHiveDataRepository<LoginResponseData>(
           boxKey: HiveEntityKeys.loggedInUser.value,
         ),

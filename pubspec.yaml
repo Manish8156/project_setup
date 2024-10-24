@@ -125,6 +125,10 @@ dev_dependencies:
   # A Flutter plugin to use the Firebase Core API, which enables connecting to multiple Firebase apps.
   firebase_core: ^3.6.0
 
+  # https://pub.dev/packages/socket_io_client
+  # Port of awesome JavaScript Node.js library - Socket.io-client v2.0.1~v3.0.3 - in Dart
+  socket_io_client: ^3.0.0
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
