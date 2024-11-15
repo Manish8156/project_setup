@@ -22,7 +22,7 @@ class LoginResponseData {
   @HiveField(4)
   final String? countryNumber;
 
-  @HiveField(5)
+  @HiveField(5) 
   final String? dob;
 
   @HiveField(6)

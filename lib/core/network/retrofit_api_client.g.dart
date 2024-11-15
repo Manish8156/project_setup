@@ -22,31 +22,28 @@ class _RetrofitApiClient implements RetrofitApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<BaseResponseModel<LoginResponseData?>?>> login(
-      LoginRequest loginRequest) async {
+  Future<HttpResponse<BaseResponseModel<LoginResponseData?>?>> login(LoginRequest loginRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginRequest.toJson());
-    final _options =
-        _setStreamType<HttpResponse<BaseResponseModel<LoginResponseData?>?>>(
-            Options(
+    final _options = _setStreamType<HttpResponse<BaseResponseModel<LoginResponseData?>?>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-                .compose(
-                  _dio.options,
-                  '/api/v1/login',
-                  queryParameters: queryParameters,
-                  data: _data,
-                )
-                .copyWith(
-                    baseUrl: _combineBaseUrls(
-                  _dio.options.baseUrl,
-                  baseUrl,
-                )));
+        .compose(
+          _dio.options,
+          '/api/v1/login',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
     final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
     late BaseResponseModel<LoginResponseData?>? _value;
     try {
@@ -54,9 +51,7 @@ class _RetrofitApiClient implements RetrofitApiClient {
           ? null
           : BaseResponseModel<LoginResponseData?>.fromJson(
               _result.data!,
-              (json) => json == null
-                  ? null
-                  : LoginResponseData.fromJson(json as Map<String, dynamic>),
+              (json) => json == null ? null : LoginResponseData.fromJson(json as Map<String, dynamic>),
             );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
@@ -68,8 +63,7 @@ class _RetrofitApiClient implements RetrofitApiClient {
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
-        !(requestOptions.responseType == ResponseType.bytes ||
-            requestOptions.responseType == ResponseType.stream)) {
+        !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

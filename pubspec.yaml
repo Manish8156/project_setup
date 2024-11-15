@@ -86,6 +86,10 @@ dependencies:
   # A set of cryptographic hashing functions for Dart.
   crypto: ^3.0.6
 
+  # https://pub.dev/packages/permission_handler
+  # Permission plugin for Flutter. This plugin provides a cross-platform (iOS, Android) API to request and check permissions
+  permission_handler: ^11.3.1
+
   serverpod_client: ^2.1.4
   serverpod_flutter: any
   serverpod: ^2.1.4
@@ -128,6 +132,9 @@ dev_dependencies:
   # https://pub.dev/packages/socket_io_client
   # Port of awesome JavaScript Node.js library - Socket.io-client v2.0.1~v3.0.3 - in Dart
   socket_io_client: ^3.0.0
+
+  # Mock library for Dart inspired by Mockito.
+  mockito: ^5.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
