@@ -2,6 +2,8 @@ import 'dart:developer' as dev;
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:project_setup/core/constants/app_enums.dart';
+import 'package:project_setup/environment/env_config.dart';
 import 'package:project_setup/layers/flavor_config.dart';
 import 'package:retry/retry.dart';
 import '../../injector/injector.dart';
@@ -10,7 +12,7 @@ import '../globals.dart';
 import 'api_status_code.dart';
 
 class DioClient {
-  static final Dio _dio = Dio(BaseOptions(baseUrl: FlavorsConfig.instance!.baseUrl));
+  static final Dio _dio = Dio(BaseOptions(baseUrl: EnvConfig.baseUrl));
 
   static Dio getInstance() {
     AuthInterceptor authInterceptor = sl<AuthInterceptor>();
@@ -34,7 +36,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    if (FlavorsConfig.instance!.environment == FlavorEnvironment.development) {
+    if (EnvConfig.environment == AppEnvironment.development) {
       await Future.delayed(const Duration(seconds: 3));
     }
 
@@ -114,7 +116,7 @@ class AuthInterceptor extends Interceptor {
         delayFactor: const Duration(milliseconds: 2500),
       );
 
-      Dio dio = Dio(BaseOptions(baseUrl: FlavorsConfig.instance!.baseUrl));
+      Dio dio = Dio(BaseOptions(baseUrl: EnvConfig.baseUrl));
 
       if (kDebugMode) {
         dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));

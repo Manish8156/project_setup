@@ -1,6 +1,7 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_setup/core/utils/app_common_imports.dart';
 import 'package:project_setup/core/utils/not_found_page.dart';
+import 'package:project_setup/environment/env_config.dart';
 
 class ProjectApp extends StatefulWidget {
   const ProjectApp({super.key});
@@ -11,6 +12,12 @@ class ProjectApp extends StatefulWidget {
 
 class _ProjectAppState extends State<ProjectApp> {
   Locale? selectedAppLocale;
+  @override
+  void initState() {
+    debugPrint(' base url =====> ${EnvConfig.baseUrl}');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

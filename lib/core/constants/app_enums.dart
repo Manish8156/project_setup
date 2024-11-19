@@ -1,3 +1,25 @@
+import 'package:project_setup/core/extensions/string_extension.dart';
+
+enum AppEnvironment {
+  development('development'),
+  staging('staging'),
+  production('production');
+
+  final String value;
+  const AppEnvironment(this.value);
+
+  static AppEnvironment? fromValue(String? value) {
+    if (value.isNotNullOrEmpty) {
+      for (var environment in AppEnvironment.values) {
+        if (value == environment.value) {
+          return environment;
+        }
+      }
+    }
+    return null;
+  }
+}
+
 enum HiveEntityKeys {
   /// logged in user token
   loggedInUserToken("loggedInUserToken"),
